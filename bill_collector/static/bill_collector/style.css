@@ -1,0 +1,69 @@
+#add_ivc {
+    border: 2px solid;
+    border-radius: 12px;
+    padding: 5px;
+    border-color: #18F4EC;
+}
+
+#delete_ivc {
+    border: 2px solid;
+    border-radius: 12px;
+    padding: 5px;
+    border-color: #18F4EC;
+}
+
+#ivc_div {
+    border: 2px solid;
+    border-radius: 12px;
+    padding: 5px;
+    border-color: #18F4EC;
+}
+
+#bill_table_div {
+    border: 2px solid;
+    border-radius: 12px;
+    padding: 5px;
+    border-color: #EC8A15;
+}
+
+#bill_summary {
+    border: 2px solid;
+    border-radius: 12px;
+    padding: 5px;
+    border-color: #EC8A15;
+}
+
+#outcome_summary {
+    border: 2px solid;
+    border-radius: 12px;
+    padding: 5px;
+    border-color: #EC8A15;
+}
+
+#income_summary {
+    border: 2px solid;
+    border-radius: 12px;
+    padding: 5px;
+    border-color: #EC8A15;
+}
+
+#total_summary {
+    border: 2px solid;
+    border-radius: 12px;
+    padding: 5px;
+    border-color: #EC8A15;
+}
+
+table, td, th {
+    border: 1px solid black;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+}

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        {% load static %}
+        {% load cust_temp %}
+        <link rel="stylesheet" type="text/css" href="{% static 'bill_collector/style.css' %}">
+        <script src="{% static 'bill_collector/month_bill_table.js' %}"></script>
+        <title>Monthly Bill</title>
+    </head>
+    <body>
+        <form action="/bill_collector/">
+            <input type="submit" value="< Back">
+        </form>
+        <p id="bill_desc">Monthly bill form for {{ month }}/{{ year }}</p>
+        <div class="grid-container">
+            <div id="add_ivc" class="grid-child">
+                <p>Add New Invoice</p>
+                <form action="/bill_collector/add_invoice/" method="post">
+                    <div>
+                        <label for="date">Date</label>
+                        <input id="date" type="date" name="date" required>
+                    </div>
+                    <div>
+                        <label for="bank_name">Bank Name</label>
+                        <input id="bank_name" type="text" name="bank_name" required>
+                    </div>
+                    <div>
+                        <label for="number">Number</label>
+                        <input id="number" type="text" name="number" required>
+                    </div>
+                    <div>
+                        <input id="outcome" type="radio" name="direction" value="outcome" required>
+                        <label for="outcome">Outcome</label>
+                        <input id="income" type="radio" name="direction" value="income" required>
+                        <label for="income">Income</label>
+                    </div>
+                    <div>
+                        <label for="ivc_type">Type</label>
+                        <input id="ivc_type" type="text" name="ivc_type" required>
+                    </div>
+                    <div>
+                        <label for="ivc_cmt">Comment</label>
+                        <input id="ivc_cmt" type="text" name="ivc_comment" placeholder="(Optional)">
+                    </div>
+                    <div>
+                      <input type="submit" value="Submit">
+                    </div>
+                </form>
+            </div>
+            <div id="delete_ivc" class="grid-child">
+                <p>Delete Invoice</p>
+                <form action="/bill_collector/delete_invoice/" method="post">
+                    <div>
+                        <label for="ivc_id">Invoice ID</label>
+                        <input id="ivc_id" type="text" name="ivc_id" size="50" placeholder="Number in parentheses of each invoice in bill table" required>
+                    </div>
+                    <div>
+                      <input type="submit" value="Submit">
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <br><br>
+        <div class="grid-container">
+            <div id="bill_table_div" class="grid-child">
+                <p>Bill Table</p>
+                {% if not banks %}
+                    <p>No data</p>
+                {% else %}
+                    <table id="bill_table">
+                        <tr>
+                            <td></td>
+                            {% for bk in banks %}
+                                <td>
+                                    {{ bk }}
+                                </td>
+                            {% endfor %}
+                        </tr>
+                        {% for day in days %}
+                            <tr>
+                                <td>{{ day }}</td>
+                                {% for bk in banks %}
+                                    <td>
+                                        {% for ivc in bill_table|index:day|index:forloop.counter0 %}
+                                            {% if ivc %}
+                                                <div id="ivc_div">{{ ivc }}</div>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                    </table>
+                {% endif %}
+            </div>
+            <div id="bill_summary" class="grid-child">
+                <p>Bill Summary</p>
+                <br>
+                {% if bill_summary.total == 0 %}
+                    <p>No data</p>
+                {% else %}
+                    <div id="outcome_summary">
+                        <p>Outcome</p>
+                        {% for type, number in bill_summary.outcome.items %}
+                            {% if type != 'total' %}
+                                <p>{{ type }}: {{ number }}</p>
+                            {% endif %}
+                        {% endfor %}
+                        <p>total: {{ bill_summary.outcome.total }}</p>
+                    </div><br>
+                    <div id="income_summary">
+                        <p>Income</p>
+                        {% for type, number in bill_summary.income.items %}
+                            {% if type != 'total' %}
+                                <p>{{ type }}: {{ number }}</p>
+                            {% endif %}
+                        {% endfor %}
+                        <p>total: {{ bill_summary.income.total }}</p>
+                    </div><br>
+                    <div id="total_summary">
+                        <p>Total: {{ bill_summary.total }}</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+    </body>
+    <script>
+        document.getElementById("date").setAttribute("min", getFirstDayOfMonth())
+        document.getElementById("date").setAttribute("max", getLastDayOfMonth())
+    </script>
+</html>
