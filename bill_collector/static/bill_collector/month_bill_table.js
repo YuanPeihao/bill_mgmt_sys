@@ -1,9 +1,20 @@
+const month_bill_tb_path = window.location.pathname;
+
+
 function getMonthAndYearOfPage() {
-    const path = window.location.pathname;
-    const pathArray = path.split("/");
+    const pathArray = month_bill_tb_path.split("/");
     const month = pathArray[pathArray.length-2];
     const year = pathArray[pathArray.length-3];
     return [month, year];
+}
+
+function appendMonthAndYear(path) {
+    var [month, year] = getMonthAndYearOfPage();
+    if (path[path.length-1] == "/") {
+        return path + year + "/" + month + "/"
+    } else {
+        return path + "/" + year + "/" + month + "/"
+    }
 }
 
 function getFirstDayOfMonth() {

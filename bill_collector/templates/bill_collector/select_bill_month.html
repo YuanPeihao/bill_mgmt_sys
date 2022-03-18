@@ -2,19 +2,24 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'bill_collector/style.css' %}">
         <title>Bill Management</title>
     </head>
     <body>
-        <form action="selected_month/">
-            <div>
-                <label for="month">Select Month</label>
-                <input id="month" type="month" name="month"
-                       min="2020-01" max="2030-12" required>
-                <span class="validity"></span>
-            </div>
-            <div>
-                <input type="submit" value="Submit">
-            </div>
-        </form>
+        <p>Manage Your Bill Wisely</p>
+        <div id="select_month">
+            <form action="selected_month/">
+                <div>
+                    <label for="month">Select Month</label>
+                    <input id="month" type="month" name="month"
+                           min="2020-01" max="2030-12" required>
+                    <span class="validity"></span>
+                </div>
+                <div>
+                    <input type="submit" value="Start">
+                </div>
+            </form>
+        </div>
     </body>
 </html>

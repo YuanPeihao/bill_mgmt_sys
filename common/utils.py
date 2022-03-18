@@ -2,7 +2,9 @@ from calendar import monthrange
 import logging
 
 
+logging.basicConfig()
 logger = logging.getLogger('bill_mgmt_sys')
+logger.setLevel(logging.DEBUG)
 
 
 def get_num_of_days_by_month(year: int, month: int) -> int:
@@ -14,7 +16,8 @@ def query_string_to_dict(query: str) -> dict:
     res = dict()
     for pair in pairs:
         k, v = pair.split('=')
-        res.update({k: v})
+        if v:
+            res.update({k: v})
     return res
 
 
