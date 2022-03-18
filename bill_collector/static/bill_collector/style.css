@@ -12,6 +12,13 @@
     border-color: #18F4EC;
 }
 
+#update_ivc {
+    border: 2px solid;
+    border-radius: 12px;
+    padding: 5px;
+    border-color: #18F4EC;
+}
+
 #ivc_div {
     border: 2px solid;
     border-radius: 12px;
@@ -64,6 +71,23 @@ table {
 
 .grid-container {
     display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 20px;
+}
+
+#bill_container {
+    display: grid;
     grid-template-columns: 1fr 1fr;
     grid-gap: 20px;
+}
+
+.required {
+  color: red;
+}
+
+#select_month {
+    border: 2px solid;
+    border-radius: 12px;
+    padding: 5px;
+    border-color: #6EEC15;
 }

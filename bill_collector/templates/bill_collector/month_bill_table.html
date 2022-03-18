@@ -16,54 +16,93 @@
         <div class="grid-container">
             <div id="add_ivc" class="grid-child">
                 <p>Add New Invoice</p>
-                <form action="/bill_collector/add_invoice/" method="post">
+                <form action="add_invoice/" method="post">
                     <div>
-                        <label for="date">Date</label>
+                        <label for="date">Date</label><span class="required">*</span>
                         <input id="date" type="date" name="date" required>
                     </div>
                     <div>
-                        <label for="bank_name">Bank Name</label>
+                        <label for="bank_name">Bank Name</label><span class="required">*</span>
                         <input id="bank_name" type="text" name="bank_name" required>
                     </div>
                     <div>
-                        <label for="number">Number</label>
+                        <label for="number">Number</label><span class="required">*</span>
                         <input id="number" type="text" name="number" required>
                     </div>
                     <div>
+                        <span class="required">*</span>
                         <input id="outcome" type="radio" name="direction" value="outcome" required>
                         <label for="outcome">Outcome</label>
                         <input id="income" type="radio" name="direction" value="income" required>
                         <label for="income">Income</label>
                     </div>
                     <div>
-                        <label for="ivc_type">Type</label>
+                        <label for="ivc_type">Type</label><span class="required">*</span>
                         <input id="ivc_type" type="text" name="ivc_type" required>
                     </div>
                     <div>
                         <label for="ivc_cmt">Comment</label>
-                        <input id="ivc_cmt" type="text" name="ivc_comment" placeholder="(Optional)">
+                        <input id="ivc_cmt" type="text" name="ivc_comment">
                     </div>
                     <div>
-                      <input type="submit" value="Submit">
+                      <input type="submit" value="Add">
+                    </div>
+                </form>
+            </div>
+            <div id="update_ivc" class="grid-child">
+                <p>Update Invoice</p>
+                <form action="update_invoice/" method="post">
+                    <div>
+                        <label for="ivc_id_upd">Invoice ID</label><span class="required">*</span>
+                        <input id="ivc_id_upd" type="text" name="ivc_id" size="50" placeholder="Number in parentheses of each invoice in bill table" required>
+                    </div>
+                    <div>
+                        <label for="date_upd">Date</label>
+                        <input id="date_upd" type="date" name="date">
+                    </div>
+                    <div>
+                        <label for="bank_name_upd">Bank Name</label>
+                        <input id="bank_name_upd" type="text" name="bank_name">
+                    </div>
+                    <div>
+                        <label for="number_upd">Number</label>
+                        <input id="number_upd" type="text" name="number">
+                    </div>
+                    <div>
+                        <input id="outcome_upd" type="radio" name="direction" value="outcome">
+                        <label for="outcome_upd">Outcome</label>
+                        <input id="income_upd" type="radio" name="direction" value="income">
+                        <label for="income_upd">Income</label>
+                    </div>
+                    <div>
+                        <label for="ivc_type_upd">Type</label>
+                        <input id="ivc_type_upd" type="text" name="ivc_type">
+                    </div>
+                    <div>
+                        <label for="ivc_cmt_upd">Comment</label>
+                        <input id="ivc_cmt_upd" type="text" name="ivc_comment">
+                    </div>
+                    <div>
+                      <input type="submit" value="Update">
                     </div>
                 </form>
             </div>
             <div id="delete_ivc" class="grid-child">
                 <p>Delete Invoice</p>
-                <form action="/bill_collector/delete_invoice/" method="post">
+                <form action="delete_invoice/" method="post">
                     <div>
-                        <label for="ivc_id">Invoice ID</label>
+                        <label for="ivc_id">Invoice ID</label><span class="required">*</span>
                         <input id="ivc_id" type="text" name="ivc_id" size="50" placeholder="Number in parentheses of each invoice in bill table" required>
                     </div>
                     <div>
-                      <input type="submit" value="Submit">
+                      <input type="submit" value="Delete">
                     </div>
                 </form>
             </div>
         </div>
 
         <br><br>
-        <div class="grid-container">
+        <div class="grid-container" id="bill_container">
             <div id="bill_table_div" class="grid-child">
                 <p>Bill Table</p>
                 {% if not banks %}
@@ -130,5 +169,7 @@
     <script>
         document.getElementById("date").setAttribute("min", getFirstDayOfMonth())
         document.getElementById("date").setAttribute("max", getLastDayOfMonth())
+        document.getElementById("date_upd").setAttribute("min", getFirstDayOfMonth())
+        document.getElementById("date_upd").setAttribute("max", getLastDayOfMonth())
     </script>
 </html>

@@ -41,25 +41,45 @@ def render_monthly_bill(request, year: int, month: int):
 
 
 @method_decorator(csrf_exempt, name='dispatch')
-def add_invoice(request):
+def add_invoice(request, year: int, month: int):
     body = request.body.decode('utf-8')
     data = Invoice.decorate_data_for_add_ivc(body)
     logger.info('Creating new invoice item, data is {}'.format(data))
     Invoice.objects.create(**data)
-    year, month, _ = map(int, data.get('date').split('-'))
     return HttpResponseRedirect(reverse('bill_collector:monthly_bill', args=(year, month)))
 
 
 @method_decorator(csrf_exempt, name='dispatch')
-def delete_invoice(request):
+def delete_invoice(request, year: int, month: int):
     body = request.body.decode('utf-8')
     logger.info('Deleting invoice item, data is {}'.format(body))
     ivc_id = body.split('=')[1]
     ivc = Invoice.objects.get(id=ivc_id)
-    year, month = ivc.date.year, ivc.date.month
     res = ivc.delete()
     logger.info('Result is {}'.format(res))
     # need more res handlers here
     return HttpResponseRedirect(reverse('bill_collector:monthly_bill', args=(year, month)))
+
+
+@method_decorator(csrf_exempt, name='dispatch')
+def update_invoice(request, year: int, month: int):
+    body = request.body.decode('utf-8')
+    data = Invoice.decorate_data_for_add_ivc(body)
+    logger.info('Updating invoice item, data is {}'.format(data))
+    ivc_to_upd = Invoice.objects.filter(id=data.get('ivc_id'))
+    if not ivc_to_upd:
+        logger.warning('Invoice ID not found')
+    else:
+        logger.info('Updating invoice {}'.format(ivc_to_upd))
+        data.pop('ivc_id', None)
+        ivc_to_upd.update(**data)
+
+    return HttpResponseRedirect(reverse('bill_collector:monthly_bill', args=(year, month)))
+
+
+
+
+
+
 
 
